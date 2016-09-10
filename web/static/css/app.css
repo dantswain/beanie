@@ -1,1 +1,10 @@
 /* This file is for your main application css. */
+
+.logo {
+  width: 176px;
+  height: 53px;
+  display: inline-block;
+  margin-bottom: 1em;
+  background-image: url("/images/beanie-logo.png");
+  background-size: 176px 53px;
+}
