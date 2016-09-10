@@ -18,8 +18,8 @@ defmodule Beanie.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Beanie, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
+                    :gettext, :phoenix_ecto, :postgrex, :httpotion]]
   end
 
   # Specifies which paths to compile per environment.
@@ -36,6 +36,8 @@ defmodule Beanie.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:httpotion, "~>3.0.1"},
+     {:poison, "~>2.2.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"}]
   end
