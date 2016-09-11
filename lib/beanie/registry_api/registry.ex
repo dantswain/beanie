@@ -11,12 +11,13 @@ defmodule Beanie.RegistryAPI.Registry do
     }
   end
 
-  def url(registry = %Registry{}, path) do
+  def url(registry = %Registry{}, pathparts) do
     [
       registry.location,
       "v2",
-      path
+      pathparts
     ]
+    |> List.flatten
     |> Enum.join("/")
   end
 

@@ -30,7 +30,7 @@ defmodule Beanie.RepositoryController do
   end
 
   def show(conn, %{"id" => id}) do
-    repository = Repo.get!(Repository, id)
+    repository = fetch_repository(id)
     render(conn, "show.html", repository: repository)
   end
 
@@ -74,5 +74,11 @@ defmodule Beanie.RepositoryController do
   end
   defp repository_list(_) do
     {:ok, Repo.all(Repository)}
+  end
+
+  defp fetch_repository(id) do
+    repo = Repo.get!(Repository, id)
+    %{"tags" => tags} = Beanie.RegistryAPI.tag_list(Beanie.registry, repo.name)
+    %{ repo | tags: tags }
   end
 end

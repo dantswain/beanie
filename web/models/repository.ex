@@ -3,6 +3,7 @@ defmodule Beanie.Repository do
 
   schema "repositories" do
     field :name, :string
+    field :tags, {:array, :string}, virtual: true, default: []
 
     timestamps()
   end
