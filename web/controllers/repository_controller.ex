@@ -67,6 +67,8 @@ defmodule Beanie.RepositoryController do
   end
 
   defp repository_list("true") do
+    %{"repositories" => from_docker} = Beanie.RegistryAPI.catalog(Beanie.registry)
+    Beanie.Repository.Query.update_list(from_docker)
     # TODO refresh repository listing, then fetch from db
     {:ok, Repo.all(Repository)}
   end
