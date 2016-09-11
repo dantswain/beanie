@@ -22,6 +22,11 @@ defmodule Beanie do
     Supervisor.start_link(children, opts)
   end
 
+  def registry do
+    [method, args] = Application.get_env(:beanie, :docker_registry)
+    :erlang.apply(Beanie.RegistryAPI.Registry, method, args)
+  end
+
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
