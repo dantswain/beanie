@@ -1,0 +1,13 @@
+<h2>Show repository</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @repository.name %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: repository_path(@conn, :edit, @repository) %>
+<%= link "Back", to: repository_path(@conn, :index) %>
