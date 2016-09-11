@@ -7,7 +7,8 @@ use Mix.Config
 
 # General application configuration
 config :beanie,
-  ecto_repos: [Beanie.Repo]
+  ecto_repos: [Beanie.Repo],
+  docker_registry: [at_url: ["https://localhost:5000", "testuser", "testpasswd"]]
 
 # Configures the endpoint
 config :beanie, Beanie.Endpoint,
