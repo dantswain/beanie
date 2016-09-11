@@ -3,14 +3,17 @@ defmodule Beanie.RepositoryController do
 
   alias Beanie.Repository
 
-  def index(conn, _params) do
-    repositories = Repo.all(Repository)
-    render(conn, "index.html", repositories: repositories)
-  end
-
-  def new(conn, _params) do
-    changeset = Repository.changeset(%Repository{})
-    render(conn, "new.html", changeset: changeset)
+  def index(conn, params) do
+    case repository_list(params["update"]) do
+      {:ok, repositories} ->
+        conn
+        |> put_flash(:info, "Repository list updated")
+        |> render("index.html", repositories: repositories)
+      {:error, repositories} ->
+        conn
+        |> put_flash(:error, "Error fetching repositories")
+        |> render("index.html", repositories: repositories)
+    end
   end
 
   def create(conn, %{"repository" => repository_params}) do
@@ -61,5 +64,13 @@ defmodule Beanie.RepositoryController do
     conn
     |> put_flash(:info, "Repository deleted successfully.")
     |> redirect(to: repository_path(conn, :index))
+  end
+
+  defp repository_list("true") do
+    # TODO refresh repository listing, then fetch from db
+    {:ok, Repo.all(Repository)}
+  end
+  defp repository_list(_) do
+    {:ok, Repo.all(Repository)}
   end
 end

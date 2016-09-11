@@ -1,5 +1,7 @@
 <h2>Listing repositories</h2>
 
+<%= link "Update List", to: repository_path(@conn, :index, update: true) %>
+
 <table class="table">
   <thead>
     <tr>
@@ -22,5 +24,3 @@
 <% end %>
   </tbody>
 </table>
-
-<%= link "New repository", to: repository_path(@conn, :new) %>
