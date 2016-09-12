@@ -10,7 +10,7 @@
     <strong>Tags:</strong>
     <ul>
       <%= for tag <- @repository.tags do %>
-          <li><%= tag %></li>
+          <li><%= tag["name"] %> - <%= tag["created_at"] %></li>
       <% end %>
   </li>
 
