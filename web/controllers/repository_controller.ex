@@ -5,9 +5,12 @@ defmodule Beanie.RepositoryController do
 
   def index(conn, params) do
     case repository_list(params["update"]) do
-      {:ok, repositories} ->
+      {:ok, repositories, :updated} ->
         conn
         |> put_flash(:info, "Repository list updated")
+        |> render("index.html", repositories: repositories)
+      {:ok, repositories} ->
+        conn
         |> render("index.html", repositories: repositories)
       {:error, repositories} ->
         conn
@@ -70,7 +73,7 @@ defmodule Beanie.RepositoryController do
     %{"repositories" => from_docker} = Beanie.RegistryAPI.catalog(Beanie.registry)
     Beanie.Repository.Query.update_list(from_docker)
     # TODO refresh repository listing, then fetch from db
-    {:ok, Repo.all(Repository)}
+    {:ok, Repo.all(Repository), :updated}
   end
   defp repository_list(_) do
     {:ok, Repo.all(Repository)}

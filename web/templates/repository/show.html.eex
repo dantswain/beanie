@@ -12,6 +12,7 @@
       <%= for tag <- @repository.tags do %>
           <li><%= tag["name"] %> - <%= tag["created_at"] %></li>
       <% end %>
+    </ul>
   </li>
 
 </ul>
