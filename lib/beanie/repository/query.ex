@@ -11,7 +11,7 @@ defmodule Beanie.Repository.Query do
     new_names = MapSet.difference(names, existing_names)
     deleted_names = MapSet.difference(existing_names, names) |> MapSet.to_list
 
-    changesets = new_names
+    new_names
     |> Enum.each(fn(name) ->
       Repository.changeset(%Repository{}, %{"name" => name})
       |> Repo.insert
@@ -27,13 +27,12 @@ defmodule Beanie.Repository.Query do
   end
 
   def update_tag_list(repository, tags) do
-    repo_id = repository.id
     tag_names = Enum.map(tags, fn(tag) -> tag.name end) |> MapSet.new
     existing_names = MapSet.new(all_tag_names(repository))
     new_names = MapSet.difference(tag_names, existing_names)
     deleted_names = MapSet.difference(existing_names, tag_names) |> MapSet.to_list
 
-    changesets = new_names
+    new_names
     |> Enum.map(fn(new_name) ->
       tag = Enum.find(tags, fn(t) -> t.name == new_name end)
       Tag.changeset(%{tag | creation_timestamp: Ecto.DateTime.cast!(tag.creation_timestamp)})
