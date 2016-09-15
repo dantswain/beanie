@@ -14,6 +14,6 @@ defmodule Beanie.Repository do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:description])
+    |> cast(params, [:description, :name])
   end
 end

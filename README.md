@@ -12,6 +12,8 @@ Beanie is still very much WIP and experimental.  Feedback is welcome!
 
 ## Setup
 
+### Running locally
+
 The usual Phoenix workflow applies here.  This assumes you have
 Elixir, Phoenix, and Postgres installed.  Eventually I will make a
 Dockerfile for this and post the image on Dockerhub to make this
@@ -29,7 +31,7 @@ The included [docker-compose.yml](docker-compose.yml) can launch a
 simple registry locally.
 
 ```
-docker-compose up -d
+docker-compose up -d registry
 ```
 
 Configure the repository via [config/config.exs](config/config.exs).
@@ -42,13 +44,41 @@ config :beanie,
 ```
 
 **NOTE** If you change your registry, you should reset the database by
-calling
+calling `mix ecto.reset`.
+
+### Running in docker
+
+Pull the images by running `docker-compose pull`.  Then lanuch the
+registry and postgres databases:
 
 ```
-mix ecto.drop
-mix ecto.create
-mix ecto.migrate
+docker-compose up -d registry
+docker-compose up -d postgres
 ```
+
+Build the node modules and your static assets:
+
+```
+docker-compose run --rm node npm install
+docker-compose run --rm node ./node_modules/brunch/bin/brunch build
+```
+
+Build the application:
+
+```
+rm -rf deps _build
+docker-compose run --rm mix deps.get
+docker-compose run --rm mix compile
+docker-compose run --rm mix phoenix.digest
+```
+
+Then run it:
+
+```
+docker-compose up web
+```
+
+### Creating images in the local repository
 
 For development, you can build and push some small images using
 [test_image/tiny.Dockerfile](test_image/tiny.Dockerfile).  The image

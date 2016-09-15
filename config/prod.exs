@@ -17,7 +17,16 @@ config :beanie, Beanie.Endpoint,
   cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, level: :debug
+
+# Configure your database
+config :beanie, Beanie.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "beanie_prod",
+  hostname: "postgres",
+  pool_size: 10
 
 # ## SSL Support
 #
@@ -55,6 +64,9 @@ config :logger, level: :info
 #
 #     config :beanie, Beanie.Endpoint, server: true
 #
+
+config :beanie,
+  docker_registry: [:at_url, ["https://registry:5000", "testuser", "testpasswd"]]
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.

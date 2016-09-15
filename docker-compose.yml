@@ -12,3 +12,32 @@ registry:
     - ./registry/data:/var/lib/registry
     - ./registry/auth:/auth
     - ./registry/certs:/certs
+postgres:
+  image: postgres:9.5.4
+  environment:
+    PGDATA: /pgdata
+    POSTGRES_DB: beanie_prod
+  ports:
+    - 5432
+  volumes:
+    - ./pgdata:/pgdata
+node:
+  image: node:6.5.0
+  command: /bin/true
+  working_dir: /beanie
+  volumes:
+    - ./:/beanie
+web:
+  image: trenpixster/elixir:1.3.2
+  command: mix phoenix.server
+  working_dir: /beanie
+  environment:
+    MIX_ENV: prod
+    PORT: 80
+  ports:
+    - 80
+  volumes:
+    - ./:/beanie
+  links:
+    - postgres
+    - registry
