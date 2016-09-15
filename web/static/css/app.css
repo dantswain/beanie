@@ -12,3 +12,7 @@
 textarea#repository_description {
     height: 10em;
 }
+
+.table>thead>tr>th {
+    border-bottom: none;
+}
