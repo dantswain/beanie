@@ -1,20 +1,67 @@
 # Beanie
 
-To start your Phoenix app:
+Beanie is a Docker registry web viewer powered by Elixir & Phoenix
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
+The goal of Beanie is to allow a team to communicate effectively about
+the contents of their private Docker registry.  Docker registry does
+not provide a particularly easy way to list images and their tags;
+Beanie uses the registry's REST API to extract this information and
+display it on a web page.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Beanie is still very much WIP and experimental.  Feedback is welcome!
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+## Setup
 
-## Learn more
+The usual Phoenix workflow applies here.  This assumes you have
+Elixir, Phoenix, and Postgres installed.  Eventually I will make a
+Dockerfile for this and post the image on Dockerhub to make this
+easier.
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+```
+mix deps.get
+mix compile
+mix ecto.create
+mix ecto.migrate
+mix phoenix.server
+```
+
+The included [docker-compose.yml](docker-compose.yml) can launch a
+simple registry locally.
+
+```
+docker-compose up -d
+```
+
+Configure the repository via [config/config.exs](config/config.exs).
+Currently only basic HTTP auth is supported.
+
+```
+config :beanie,
+  # ...
+  docker_registry: [:at_url, ["https://localhost:5000", "testuser", "testpasswd"]]
+```
+
+**NOTE** If you change your registry, you should reset the database by
+calling
+
+```
+mix ecto.drop
+mix ecto.create
+mix ecto.migrate
+```
+
+For development, you can build and push some small images using
+[test_image/tiny.Dockerfile](test_image/tiny.Dockerfile).  The image
+will contain the file message.txt, so if you want to change the image,
+just change the file and rebuild.
+
+```
+cd test_image
+docker build -t my_image -f tiny.Dockerfile .
+docker tag my_image localhost:5000/my_image:first
+docker push localhost:500/my_image:first
+echo "foo" > message.txt"
+docker build -t my_image -f tiny.Dockerfile .
+docker tag my_image localhost:5000/my_image:latest
+docker push localhost:500/my_image:latest
+```

@@ -8,6 +8,7 @@ use Mix.Config
 # General application configuration
 config :beanie,
   ecto_repos: [Beanie.Repo],
+  # config for the registry launched by docker-compose
   docker_registry: [:at_url, ["https://localhost:5000", "testuser", "testpasswd"]]
 
 # Configures the endpoint
