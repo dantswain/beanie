@@ -1,5 +1,6 @@
 <h2>Show repository</h2>
 
+<%= link "Edit metadata", to: repository_path(@conn, :edit, @repository.id) %> <br/>
 <%= link "Update tag data", to: repository_path(@conn, :show, @repository.id, update: true) %>
 
 <ul>
@@ -7,6 +8,10 @@
   <li>
     <strong>Name:</strong>
     <%= @repository.name %>
+  </li>
+  <li>
+    <strong>Description:</strong>
+    <%= @repository.description %>
   </li>
   <li>
     <strong>Tags:</strong>

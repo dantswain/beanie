@@ -3,6 +3,7 @@ defmodule Beanie.Repository do
 
   schema "repositories" do
     field :name, :string
+    field :description, :string
     has_many :tags, Beanie.Tag
 
     timestamps()
@@ -13,7 +14,6 @@ defmodule Beanie.Repository do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, [:description])
   end
 end

@@ -6,14 +6,17 @@
   <thead>
     <tr>
       <th>Name</th>
-
-      <th></th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
 <%= for repository <- @repositories do %>
     <tr>
       <td><%= repository.name %></td>
+
+      <td>
+        <%= repository.description %>
+      </td>
 
       <td class="text-right">
         <%= link "Show", to: repository_path(@conn, :show, repository), class: "btn btn-default btn-xs" %>

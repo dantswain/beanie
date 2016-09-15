@@ -8,3 +8,7 @@
   background-image: url("/images/beanie-logo.png");
   background-size: 176px 53px;
 }
+
+textarea#repository_description {
+    height: 10em;
+}
