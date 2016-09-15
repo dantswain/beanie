@@ -1,5 +1,7 @@
 <h2>Show repository</h2>
 
+<%= link "Update tag data", to: repository_path(@conn, :show, @repository.id, update: true) %>
+
 <ul>
 
   <li>
@@ -10,7 +12,7 @@
     <strong>Tags:</strong>
     <ul>
       <%= for tag <- @repository.tags do %>
-          <li><%= tag["name"] %> - <%= tag["created_at"] %></li>
+          <li><%= tag.name %> - <%= tag.creation_timestamp %></li>
       <% end %>
     </ul>
   </li>

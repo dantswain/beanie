@@ -32,8 +32,8 @@ defmodule Beanie.RepositoryController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    repository = fetch_repository(id)
+  def show(conn, params = %{"id" => id}) do
+    repository = fetch_repository(id, params["update"])
     render(conn, "show.html", repository: repository)
   end
 
@@ -79,14 +79,18 @@ defmodule Beanie.RepositoryController do
     {:ok, Repo.all(Repository)}
   end
 
-  defp fetch_repository(id) do
+  defp fetch_repository(id, "true") do
     repo = Repo.get!(Repository, id)
     %{"tags" => tags} = Beanie.RegistryAPI.tag_list(Beanie.registry, repo.name)
     tags = Enum.map(tags, fn(tag_name) ->
       manifest = Beanie.RegistryAPI.manifest(Beanie.registry, repo.name, tag_name)
       created_at = Beanie.RegistryAPI.created_at_from_manifest(manifest)
-      %{"name" => tag_name, "created_at" => created_at}
+      %Beanie.Tag{name: tag_name, creation_timestamp: created_at, repository: repo}
     end)
+    Beanie.Repository.Query.update_tag_list(repo, tags)
     %{ repo | tags: tags }
+  end
+  defp fetch_repository(id, _) do
+    Repo.get!(Repository, id) |> Repo.preload(:tags)
   end
 end
