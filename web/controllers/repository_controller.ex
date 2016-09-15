@@ -19,19 +19,6 @@ defmodule Beanie.RepositoryController do
     end
   end
 
-  def create(conn, %{"repository" => repository_params}) do
-    changeset = Repository.changeset(%Repository{}, repository_params)
-
-    case Repo.insert(changeset) do
-      {:ok, _repository} ->
-        conn
-        |> put_flash(:info, "Repository created successfully.")
-        |> redirect(to: repository_path(conn, :index))
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
-  end
-
   def show(conn, params = %{"id" => id}) do
     repository = fetch_repository(id, params["update"])
     render(conn, "show.html", repository: repository)
@@ -55,18 +42,6 @@ defmodule Beanie.RepositoryController do
       {:error, changeset} ->
         render(conn, "edit.html", repository: repository, changeset: changeset)
     end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    repository = Repo.get!(Repository, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(repository)
-
-    conn
-    |> put_flash(:info, "Repository deleted successfully.")
-    |> redirect(to: repository_path(conn, :index))
   end
 
   defp repository_list("true") do
