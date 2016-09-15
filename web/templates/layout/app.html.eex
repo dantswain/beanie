@@ -19,7 +19,7 @@
             <li><a href="<%= repository_path(@conn, :index) %>">Repositories</a></li>
           </ul>
         </nav>
-        <span class="logo"></span>
+        <a href="/"><span class="logo"></span></a>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

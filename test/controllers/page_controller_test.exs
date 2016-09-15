@@ -3,6 +3,6 @@ defmodule Beanie.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Beanie"
+    assert redirected_to(conn) =~ "/repositories"
   end
 end
