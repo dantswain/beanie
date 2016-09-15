@@ -15,5 +15,6 @@ defmodule Beanie.Repository do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:description, :name])
+    |> validate_required([:name])
   end
 end
