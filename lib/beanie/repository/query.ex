@@ -3,13 +3,11 @@ defmodule Beanie.Repository.Query do
   alias Beanie.Repo
 
   alias Beanie.Repository
+  alias Beanie.Helpers
   alias Beanie.Tag
 
   def update_list(names) do
-    names = MapSet.new(names)
-    existing_names = MapSet.new(all_names)
-    new_names = MapSet.difference(names, existing_names)
-    deleted_names = MapSet.difference(existing_names, names) |> MapSet.to_list
+    {new_names, deleted_names} = Helpers.relative_complements(names, all_names)
 
     new_names
     |> Enum.each(fn(name) ->
@@ -28,9 +26,9 @@ defmodule Beanie.Repository.Query do
 
   def update_tag_list(repository, tags) do
     tag_names = Enum.map(tags, fn(tag) -> tag.name end) |> MapSet.new
-    existing_names = MapSet.new(all_tag_names(repository))
-    new_names = MapSet.difference(tag_names, existing_names)
-    deleted_names = MapSet.difference(existing_names, tag_names) |> MapSet.to_list
+
+    {new_names, deleted_names} =
+      Helpers.relative_complements(tag_names, all_tag_names(repository))
 
     new_names
     |> Enum.map(fn(new_name) ->
