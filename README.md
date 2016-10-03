@@ -89,8 +89,9 @@ just change the file and rebuild.
 cd test_image
 docker build -t my_image -f tiny.Dockerfile .
 docker tag my_image localhost:5000/my_image:first
-docker push localhost:500/my_image:first
-echo "foo" > message.txt"
+docker login -u testuser -p testpasswd https://localhost:5000
+docker push localhost:5000/my_image:first
+echo "foo" > message.txt
 docker build -t my_image -f tiny.Dockerfile .
 docker tag my_image localhost:5000/my_image:latest
 docker push localhost:500/my_image:latest
