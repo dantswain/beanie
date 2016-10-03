@@ -15,7 +15,7 @@ Beanie is still very much WIP and experimental.  Feedback is welcome!
 ### Running locally
 
 The usual Phoenix workflow applies here.  This assumes you have
-Elixir, Phoenix, and Postgres installed.  Eventually I will make a
+Elixir, Phoenix, and Postgres installed.  Eventually, I will make a
 Dockerfile for this and post the image on Dockerhub to make this
 easier.
 
@@ -35,7 +35,7 @@ docker-compose up -d registry
 ```
 
 Configure the repository via [config/config.exs](config/config.exs).
-Currently only basic HTTP auth is supported.
+Currently, only basic HTTP auth is supported.
 
 ```
 config :beanie,
@@ -48,8 +48,8 @@ calling `mix ecto.reset`.
 
 ### Running in docker
 
-Pull the images by running `docker-compose pull`.  Then lanuch the
-registry and postgres databases:
+Pull the images by running `docker-compose pull`.  Then launch the
+registry and Postgres databases:
 
 ```
 docker-compose up -d registry
