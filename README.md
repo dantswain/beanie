@@ -3,8 +3,8 @@
 Beanie is a Docker registry web viewer powered by Elixir & Phoenix
 
 The goal of Beanie is to allow a team to communicate effectively about
-the contents of their private Docker registry.  Docker registry does
-not provide a particularly easy way to list images and their tags;
+the contents of their private Docker registry. Docker registry does
+not provide a particularly easy way to list images and their tags.
 Beanie uses the registry's REST API to extract this information and
 display it on a web page.
 
@@ -14,8 +14,8 @@ Beanie is still very much WIP and experimental.  Feedback is welcome!
 
 ### Running locally
 
-The usual Phoenix workflow applies here.  This assumes you have
-Elixir, Phoenix, and Postgres installed.  Eventually I will make a
+The usual Phoenix workflow applies here. This assumes you have
+Elixir, Phoenix, and Postgres installed. Eventually I will make a
 Dockerfile for this and post the image on Dockerhub to make this
 easier.
 
@@ -43,12 +43,12 @@ config :beanie,
   docker_registry: [:at_url, ["https://localhost:5000", "testuser", "testpasswd"]]
 ```
 
-**NOTE** If you change your registry, you should reset the database by
+**NOTE**: If you change your registry, you should reset the database by
 calling `mix ecto.reset`.
 
 ### Running in docker
 
-Pull the images by running `docker-compose pull`.  Then lanuch the
+Pull the images by running `docker-compose pull`. Then launch the
 registry and postgres databases:
 
 ```
@@ -81,7 +81,7 @@ docker-compose up web
 ### Creating images in the local repository
 
 For development, you can build and push some small images using
-[test_image/tiny.Dockerfile](test_image/tiny.Dockerfile).  The image
+[test_image/tiny.Dockerfile](test_image/tiny.Dockerfile). The image
 will contain the file message.txt, so if you want to change the image,
 just change the file and rebuild.
 
