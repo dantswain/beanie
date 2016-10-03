@@ -3,7 +3,7 @@
 Beanie is a Docker registry web viewer powered by Elixir & Phoenix
 
 The goal of Beanie is to allow a team to communicate effectively about
-the contents of their private Docker registry.  Docker registry does
+the contents of their private Docker registry.  A Docker registry does
 not provide a particularly easy way to list images and their tags;
 Beanie uses the registry's REST API to extract this information and
 display it on a web page.
@@ -48,7 +48,7 @@ calling `mix ecto.reset`.
 
 ### Running in docker
 
-Pull the images by running `docker-compose pull`.  Then lanuch the
+Pull the images by running `docker-compose pull`.  Then launch the
 registry and postgres databases:
 
 ```
