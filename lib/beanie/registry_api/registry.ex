@@ -27,17 +27,15 @@ defmodule Beanie.RegistryAPI.Registry do
     url = url(registry, path)
     Logger.debug("Fetching registry url #{url}")
 
-    try do
-      response = registry.http_client.get!(
-        url(registry, path),
-        [basic_auth: {registry.user, registry.password}]
-      )
-      Logger.debug("Got '#{response.body}' from #{url}")
-      Poison.decode!(response.body)
-    rescue
-      e in HTTPotion.HTTPError -> e
-      %{"repositories" => [], :error => e}
+    case registry.http_client.get(
+      url(registry, path),
+      [basic_auth: {registry.user, registry.password}]
+    ) do
+      %HTTPotion.ErrorResponse{message: error} ->
+        {:error, error}
+      %HTTPotion.Response{body: body} ->
+        Logger.debug("Got '#{body}' from #{url}")
+        Poison.decode!(body)
     end
-
   end
 end
