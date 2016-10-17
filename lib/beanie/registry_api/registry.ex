@@ -32,6 +32,7 @@ defmodule Beanie.RegistryAPI.Registry do
       [basic_auth: {registry.user, registry.password}]
     ) do
       %HTTPotion.ErrorResponse{message: error} ->
+        Logger.error(error)
         {:error, error}
       %HTTPotion.Response{body: body} ->
         Logger.debug("Got '#{body}' from #{url}")

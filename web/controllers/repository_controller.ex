@@ -14,7 +14,7 @@ defmodule Beanie.RepositoryController do
         |> render("index.html", repositories: repositories)
       {:error, repositories} ->
         conn
-        |> put_flash(:error, "Error fetching repositories")
+        |> put_flash(:error, "Error updating repositories")
         |> render("index.html", repositories: repositories)
     end
   end
@@ -46,7 +46,7 @@ defmodule Beanie.RepositoryController do
 
   defp repository_list("true") do
     case Beanie.RegistryAPI.catalog(Beanie.registry) do
-      {:error, _} -> {:error, []}
+      {:error, _} -> {:error, Repo.all(Repository)}
       %{"repositories" => from_docker} ->
         Beanie.Repository.Query.update_list(from_docker)
         # TODO refresh repository listing, then fetch from db
