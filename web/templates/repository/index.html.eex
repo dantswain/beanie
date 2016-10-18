@@ -2,6 +2,7 @@
 
 <%= link "Update List", to: repository_path(@conn, :index, update: true) %>
 
+<%= get_flash(@conn, :error) %>
 <table class="table">
   <thead>
     <tr>
