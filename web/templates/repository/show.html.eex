@@ -4,7 +4,6 @@
 <%= link "Update tag data", to: repository_path(@conn, :show, @repository.id, update: true) %>
 
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @repository.name %>
