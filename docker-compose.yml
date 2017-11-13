@@ -28,11 +28,13 @@ node:
   volumes:
     - ./:/beanie
 web:
-  image: trenpixster/elixir:1.3.2
+  image: elixir:1.5
   command: mix phoenix.server
   working_dir: /beanie
   environment:
     MIX_ENV: prod
+    HEX_HOME: /beanie/.hex/docker
+    MIX_HOME: /beanie/.mix/docker
     PORT: 80
   ports:
     - 80
